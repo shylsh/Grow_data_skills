@@ -256,7 +256,33 @@ group by department_id;
 select first_name , last_name
 from employees 
 where salary > all(select sum(salary)/2 from employees
-group by department_id)
+group by department_id);
+
+/* write a SQL query to find those employees who are managers. Return all the fields of
+employees table. */
+
+SELECT *
+FROM employees
+WHERE employee_id IN
+(SELECT DISTINCT manager_id FROM employees);
+
+# Find duplicate values in 1 column
+
+select employee_id , count(employee_id) as total_count
+from employees
+group by 1
+having total_count >1 ;
+
+# Find duplicate values on 2 columns combination
+
+select first_name, last_name , count(*) as total_count
+from employees
+group by 1,2
+having total_count > 1;
+
+
+
+
 
 
 
