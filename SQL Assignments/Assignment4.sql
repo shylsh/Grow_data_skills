@@ -280,6 +280,30 @@ from employees
 group by 1,2
 having total_count > 1;
 
+-- Write a SQL query to find the most frequent value in a column, along with its frequency
+
+select department_name,count
+from (
+select department_name, count(*) as count
+from departments
+group by department_name
+) as subquery
+order by 2 desc
+limit 1;
+
+-- Write a SQL query to find the names of all employees who earn more than the
+-- average salary in their department using a correlated subquery.
+
+select first_name,salary
+from employees e
+where salary >= (
+select avg(salary)
+from employees e
+where DEPARTMENT_ID = e.department_id)
+order by 2 desc;
+
+--  Create a SQL query to find the top 3 products with the highest sales within each
+-- category using a correlated subquery
 
 
 
