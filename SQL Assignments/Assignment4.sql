@@ -298,18 +298,62 @@ select first_name,salary
 from employees e
 where salary >= (
 select avg(salary)
-from employees e
+from employees 
 where DEPARTMENT_ID = e.department_id)
 order by 2 desc;
+
+use assignments;
+select DEPARTMENT_ID, avg(salary) 
+from employees
+group by DEPARTMENT_ID;
+
 
 --  Create a SQL query to find the top 3 products with the highest sales within each
 -- category using a correlated subquery
 
+use jovian;
+select productline,productcode, sales 
+from sales_data_sample sds
+where (select count(*)
+from sales_data_sample sds
+where productline = sds.productline and sales > sds.sales 
+)<3;
+
+
+-- Write a SQL query to find the total number of orders placed by each customer,
+-- including customers who haven't placed any orders, using a correlated subquery.
+use jovian;
+select count(*) from orders
+where customerNumber = 141 ;
+
+/* Using Join*/
+select c.customerNumber,count(*) as total_orders 
+from customers c
+join orders o on o.customerNumber = c.customerNumber
+group by 1
+order by 2 desc;
+
+
+/* using Corelated query*/
+select * from customers;
+select customerNumber, customerName,
+(select count(*) 
+from orders
+where customerNumber = c.customerNumber) as order_count
+from customers c
+group by 1
+order by 3 desc;
+
+
+
+-- Create a SQL query to find the employees who have salaries greater than their
+-- immediate manager using a correlated subquery.
 
 
 
 
-
+--  Write a SQL query to find the second-highest salary in each department using a
+-- correlated subquery.
 
 
 
